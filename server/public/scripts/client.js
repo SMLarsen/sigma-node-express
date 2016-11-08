@@ -11,19 +11,23 @@ $(document).ready(function() {
 
     console.log(newSong);
 
-    // send song object to the Server
-    $.ajax({
-      type: 'POST',
-      url: '/songs',
-      data: newSong,
-      success: function(response) {
-        console.log(response);
-        getSongs();
-      },
-      error: function(error) {
-        alert("Oh no! Your song didn't save correctly.");
-      }
-    });
+    if (validateInput(newSong)) {
+
+      // send song object to the Server
+      $.ajax({
+        type: 'POST',
+        url: '/songs',
+        data: newSong,
+        success: function(response) {
+          console.log(response);
+          getSongs();
+        },
+        error: function(error) {
+          alert("Oh no! Your song didn't save correctly.");
+        }
+      });
+
+    }
 
   });
 
@@ -52,6 +56,17 @@ $(document).ready(function() {
 
   }
 
+  function validateInput(newSong) {
+    console.log('validateInput song', newSong);
+    if (newSong.artist === "" || newSong.title === "") {
+      alert("Artist and Title must be entered.");
+      console.log(false);
+      return false;
+    } else {
+      console.log(true);
+      return true;
+    }
+  }
 
 
 });
