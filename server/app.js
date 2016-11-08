@@ -3,11 +3,9 @@
 //
 // - Don't allow the user to add duplicate songs.
 // - Don't allow the user to add songs with a blank artist or title field.
-// - Done: Before pushing to our array, add a property to the new song object for the
-//    dateAdded with the current date. You'll have to look up the Date object in
-//    javascript.
-//
-// - Add the dateAdded to our DOM display for our songs.
+// - DONE: Before pushing to our array, add a property to the new song object for
+//    the dateAdded with the current date.
+// - DONE: Add the dateAdded to our DOM display for our songs.
 //
 // - NOTE: You're going to have to send back a status code of 400 if there are
  // problems. That means your client code needs to be able to handle the error
@@ -24,6 +22,7 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 var date = require('./modules/utils/getDate');
+var valDupSong = require('./modules/valDupSong');
 
 // puts post request body data and store it on req.body
 app.use(bodyParser.urlencoded({extended: true}));
@@ -46,12 +45,16 @@ app.post('/songs', function(req, res) {
   // req.body is supplied by bodyParser above
   console.log("REQ body: ", req.body);
   var newSong = req.body;
-  newSong.dateAdded = date.today;
-  songs.push(newSong);
 
-console.log(songs);
-  // created new resource
-  res.sendStatus(201);
+  if (valDupSong(songs, newSong.title)) {
+    console.log(1234);
+    res.sendStatus(500);
+  } else {
+    newSong.dateAdded = date.today;
+    songs.push(newSong);
+    console.log(songs);
+    res.sendStatus(201);
+  }
 });
 
 app.get('/songs', function(req, res) {

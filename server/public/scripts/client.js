@@ -24,9 +24,9 @@ $(document).ready(function() {
           alert("Oh no! Your song didn't save correctly.");
         }
       }
-    })
+    });
 
-  })
+  });
 
   getSongs();
 
