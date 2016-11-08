@@ -3,7 +3,7 @@
 //
 // - Don't allow the user to add duplicate songs.
 // - Don't allow the user to add songs with a blank artist or title field.
-// - Before pushing to our array, add a property to the new song object for the
+// - Done: Before pushing to our array, add a property to the new song object for the
 //    dateAdded with the current date. You'll have to look up the Date object in
 //    javascript.
 //
@@ -40,13 +40,16 @@ var songs = [
 ];
 
 console.log(songs);
+
 // Routes
 app.post('/songs', function(req, res) {
   // req.body is supplied by bodyParser above
   console.log("REQ body: ", req.body);
   var newSong = req.body;
+  newSong.dateAdded = date.today;
   songs.push(newSong);
 
+console.log(songs);
   // created new resource
   res.sendStatus(201);
 });
