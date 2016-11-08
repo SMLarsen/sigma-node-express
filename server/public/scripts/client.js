@@ -18,11 +18,10 @@ $(document).ready(function() {
       data: newSong,
       success: function(response) {
         console.log(response);
-        if(response == "Created") {
-          getSongs();
-        } else {
-          alert("Oh no! Your song didn't save correctly.");
-        }
+        getSongs();
+      },
+      error: function(error) {
+        alert("Oh no! Your song didn't save correctly.");
       }
     });
 

@@ -47,8 +47,7 @@ app.post('/songs', function(req, res) {
   var newSong = req.body;
 
   if (valDupSong(songs, newSong.title)) {
-    console.log(1234);
-    res.sendStatus(500);
+    res.sendStatus(406);
   } else {
     newSong.dateAdded = date.today;
     songs.push(newSong);
