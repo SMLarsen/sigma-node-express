@@ -12,7 +12,7 @@ app.set('port', process.env.PORT || 3000);
 // Our song data
 var songs = [
   {
-    artist: "Bruce Springstein",
+    artist: "Bruce Springsteen",
     title: "Born in the U.S.A."
   }
 ];
