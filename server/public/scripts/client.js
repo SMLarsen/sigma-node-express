@@ -34,8 +34,8 @@ $(document).ready(function() {
                 url: '/songs',
                 data: newSong,
                 success: function(response) {
-                    console.log(response);
                     getSongs();
+                    clearInput();
                 },
                 error: function(error) {
                     alert("Oh no! Your song didn't save correctly.");
@@ -55,6 +55,12 @@ $(document).ready(function() {
             $el.append('<p>By: ' + songs[i].artist + '</p>');
             $el.append('<p>Date Added: ' + songs[i].dateAdded + '</p>');
         }
+    }
+
+    // empty input fields if valid
+    function clearInput() {
+      $("#artist").val("");
+      $("#title").val("");
     }
 
     // client-side validation for empty input fields

@@ -58,8 +58,6 @@ app.get('/songs', function(req, res) {
 // static file routing
 app.get('/*', function(req, res) {
     var file = req.params[0] || '/views/index.html';
-    console.log(file);
-
     res.sendFile(path.join(__dirname, './public/', file));
     // /public/views/index.html
 });
