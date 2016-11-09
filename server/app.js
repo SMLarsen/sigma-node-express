@@ -1,20 +1,20 @@
 // Instructions
 // Take the lecture code and add some logic to our POST route on the server. Do this logic on the server!
 //
-// - Don't allow the user to add duplicate songs.
-// - Don't allow the user to add songs with a blank artist or title field.
+// - DONE: Don't allow the user to add duplicate songs.
+// - DONE: Don't allow the user to add songs with a blank artist or title field.
 // - DONE: Before pushing to our array, add a property to the new song object for
 //    the dateAdded with the current date.
 // - DONE: Add the dateAdded to our DOM display for our songs.
 //
-// - NOTE: You're going to have to send back a status code of 400 if there are
- // problems. That means your client code needs to be able to handle the error
- // case and tell the user!
+// - DONE: NOTE: You're going to have to send back a status code of 400 if
+//  there are problems. That means your client code needs to be able to
+//  handle the error case and tell the user!
 //
 // HARD MODE
-// - Move your new logic into a module (like in Module Madness) and export the
-//  functions needed. This keeps the code nice and organized. Have a look at the
-//  Router() object in Express.
+// - DONE: Move your new logic into a module (like in Module Madness) and export
+//    the functions needed. This keeps the code nice and organized. Have a look
+ //   at the Router() object in Express.
 
 // node/express application
 var express = require('express');
@@ -23,6 +23,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var date = require('./modules/utils/getDate');
 var valDupSong = require('./modules/valDupSong');
+var valEmptyFields = require('./modules/valEmptyFields');
 
 // puts post request body data and store it on req.body
 app.use(bodyParser.urlencoded({extended: true}));
@@ -38,28 +39,20 @@ var songs = [
   }
 ];
 
-console.log(songs);
-
 // Routes
 app.post('/songs', function(req, res) {
   // req.body is supplied by bodyParser above
-  console.log("REQ body: ", req.body);
   var newSong = req.body;
-
-  if (valDupSong(songs, newSong)) {
-    res.sendStatus(406);
+  if (valDupSong(songs, newSong) || valEmptyFields(newSong)) {
+    res.sendStatus(400);
   } else {
     newSong.dateAdded = date.today;
     songs.push(newSong);
-    console.log(songs);
     res.sendStatus(201);
   }
 });
 
 app.get('/songs', function(req, res) {
-  console.log('handling get request for songs');
-  // response options
-  // res.sendStatus(200);
   res.send(songs);
 });
 
